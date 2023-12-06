@@ -1,11 +1,10 @@
 FROM maven:3-openjdk-17 as build-image
 WORKDIR /to-build-app
-COPY ./pom.xml .
+COPY . .
 RUN mvn dependency:go-offline
-COPY src ./src
-RUN mvn -DskipTests clean package
+RUN mvn package -DskipTests
 
-FROM eclipse-temurin:17-jre-jammy
+FROM eclipse-temurin:17-jre-alpine
 WORKDIR /app
 COPY --from=build-image /to-build-app/target/*.jar /app/app.jar
 EXPOSE 8080

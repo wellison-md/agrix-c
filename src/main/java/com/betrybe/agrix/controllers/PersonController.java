@@ -6,6 +6,7 @@ import com.betrybe.agrix.ebytr.staff.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,10 +20,15 @@ import org.springframework.web.bind.annotation.RestController;
 public class PersonController {
 
   private final PersonService personService;
+  private final AuthenticationManager authenticationManager;
 
   @Autowired
-  public PersonController(PersonService personService) {
+  public PersonController(
+      PersonService personService,
+      AuthenticationManager authenticationManager
+  ) {
     this.personService = personService;
+    this.authenticationManager = authenticationManager;
   }
 
   /**
